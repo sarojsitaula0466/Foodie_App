@@ -6,7 +6,6 @@ import {
   Image,
   KeyboardAvoidingView,
 } from "react-native";
-import Logo from "../images/logo.png";
 
 const About = () => {
   return (
@@ -17,7 +16,7 @@ const About = () => {
             width: 260,
             height: 260,
           }}
-          source={require("../images/logo.png")}
+          source={require("../assets/images/logo.png")}
         />
       </View>
       <View style={styles.text}>
