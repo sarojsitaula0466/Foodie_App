@@ -33,7 +33,7 @@ const HomeScreen = () => {
 
       {/*Search*/}
       <View style={styles.searchWrapper}>
-        <Feather name="search" size={16}/>
+        <Feather name="search" size={18}/>
       <View style={styles.search}>
       <Text style={styles.searchText}> Search food you want</Text>
       </View>
@@ -59,8 +59,8 @@ const HomeScreen = () => {
             <Image source={item.image} style={styles.menuImage}/>
             </View>
             <View style={styles.menuText}> 
-            <Text styles={styles.menuTitle}>{item.title}</Text>
-            <Text styles={styles.menuPrice}>{item.price}€</Text>
+            <Text style={styles.menuTitle}>{item.title}</Text>
+            <Text style={styles.menuPrice}>{item.price} €</Text>
             
             </View>
 
@@ -96,47 +96,62 @@ const styles = StyleSheet.create({
   headerHome:{
 
     position:"absolute",
-    left:90,
-    top:'30%',
+    left:124,
+    height:26,
+    width:84,
+    top:'40%',
     fontWeight:"bold",
+    fontSize:17,
 
   },
     headerAddress:{
 
       position:"absolute",
-      left:90,
-      top:'50%',
+      left:124,
+      top:'65%',
+      color:'#A0A0A0',
   
   
     },
 
   logo :{
-    width: 80,
+    width: 113,
     height: 90,
   },
   titleWrapper: {
     paddingTop:10,
     paddingLeft:10,
+    paddingBottom:10,
+    left:10,
+
     
   },
   titleText: {
     fontWeight:"bold",
     fontSize:24,
+    lineHeight:36,
+    left:5,
+
+    
 
   },
   searchWrapper:{
     flexDirection: "row",
     alignItems:"center",
-    backgroundColor:"lightgrey",
+    backgroundColor:"#E0E0E0",
     borderRadius:14,
     paddingTop:5,
     paddingBottom:5,
     paddingLeft:30,
+    width:317,
+    height:39,
+    left:18,
     
 
 
   },
   search: {
+    
 
   },
   searchText:{
@@ -146,7 +161,6 @@ const styles = StyleSheet.create({
   menuWrapper: {
     backgroundColor: "#FFF6DC",
     borderRadius:20,
-    paddingHorizontal:20
 
   },
   menuItem: {
@@ -154,32 +168,31 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingTop: 15,
     paddingBottom: 10,
+    left:15,
 
   },
   menuText: {
     paddingLeft: 20,
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 20,
+
+
+  },
+  menuTitle: {
+    fontWeight:"bold",
+    fontSize:18,
+  },
+
+  menuPrice: {
+    fontSize:24,
+    paddingTop:10,
+    fontWeight:"bold",
 
   },
   menuImage :{
-    width: 80,
-    height: 90,
+    width: 135,
+    height: 102,
     paddingRight:60,
     borderRadius:17,
-  },
-
-  button: {
-    backgroundColor: "#0782F9",
-    width: "60%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 40,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
   },
 });
