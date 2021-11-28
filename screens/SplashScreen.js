@@ -8,22 +8,19 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
-const Contact = () => {
+const SplashScreen = () => {
   const navigation = useNavigation();
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <View style={styles.icon}>
-        <TouchableOpacity
-          style={{ height: 40, width: 40 }}
-          onPress={() => navigation.navigate("SplashScreen")}
-        >
-          <FontAwesomeIcon icon={faAngleLeft} />
+      <View style={styles.link}>
+        <TouchableOpacity onPress={() => navigation.navigate("About")}>
+          <Text>About us</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Contact")}>
+          <Text>Contact</Text>
         </TouchableOpacity>
       </View>
-
       <View style={styles.logo}>
         <Image
           style={{
@@ -34,19 +31,18 @@ const Contact = () => {
         />
       </View>
       <View style={styles.text}>
-        <Text style={styles.aboutText}>Contact</Text>
+        <Text style={styles.aboutText}>Satisfy your craving!</Text>
       </View>
       <View style={styles.body}>
-        <Text style={styles.bodyText}>
-          Email: info@foodie.fi Customer service: +358541234567 Available 24/7
-          Address: Burgerinkatu 1 00100 Helsinki Finland
-        </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+          <Text style={styles.bodyText}>Welcome to your burgers paradise!</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 };
 
-export default Contact;
+export default SplashScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -55,15 +51,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#E5E5E5",
     padding: 0,
-    position: "relative",
   },
-  icon: {
-    justifyContent: "center",
-    alignItems: "flex-start",
+  link: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+
+    width: "100%",
     position: "absolute",
-    left: 20,
-    height: "15%",
-    width: 40,
+    top: 50,
+    paddingLeft: 20,
+    paddingRight: 20,
+    //backgroundColor: "red",
   },
   logo: {
     paddingTop: 20,
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   },
   text: {
     paddingBottom: 20,
+
     height: "15%",
   },
   aboutText: {
@@ -79,24 +80,22 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: "#FEBB01",
-    height: 500,
-    width: 400,
     height: "50%",
     width: "100%",
     borderTopStartRadius: 80,
     borderTopRightRadius: 80,
     alignItems: "center",
     justifyContent: "center",
-    paddingLeft: 40,
+    /*    paddingLeft: 40,
     paddingRight: 40,
-    position: "relative",
+    position: "relative", */
   },
   bodyText: {
-    fontSize: 30,
+    fontSize: 40,
 
     alignItems: "center",
     color: "#81693F",
-    position: "absolute",
-    top: 60,
+    /*  position: "absolute",
+    top: 60, */
   },
 });
