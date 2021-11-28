@@ -6,7 +6,7 @@ import {
   Image,
   KeyboardAvoidingView,
 } from "react-native";
-{/*import Logo from "../assests/images/logo.png";*/}
+
 
 const About = () => {
   return (
