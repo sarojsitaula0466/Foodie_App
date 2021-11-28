@@ -23,7 +23,7 @@ const Contact = () => {
             width: 260,
             height: 260,
           }}
-          source={require("../images/logo.png")}
+          source={require("../assets/images/logo.png")}
         />
       </View>
       <View style={styles.text}>
