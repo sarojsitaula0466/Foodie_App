@@ -5,8 +5,10 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ScrollView,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { auth } from "../firebase";
@@ -14,76 +16,172 @@ import { auth } from "../firebase";
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
 
   const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log(user);
         navigation.replace("Home");
       }
     });
     return unsubscribe;
   }, []);
 
-  const handleSignUp = () => {
+  const handleLogin = () => {
     auth
-      .createUserWithEmailAndPassword(name.trim(), email.trim(), password)
+      .signInWithEmailAndPassword(email.trim(), password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log("Registered with:", user.name);
+        console.log("Logged in with:", user.email);
+      })
+      .catch((error) => alert(error.message));
+  };
+
+  const handleSignUp = () => {
+    if (password !== confirmPassword) {
+      console.log("password did not match");
+    }
+    auth
+      .createUserWithEmailAndPassword(email.trim(), password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
       })
       .catch((error) => alert(error.message));
   };
 
   return (
-    <KeyboardAwareScrollView>
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Full Name"
-            value={name}
-            onChangeText={(text) => setName(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Email"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            style={styles.input}
-            secureTextEntry
+    <View style={{ height: "100%" }}>
+      <View style={styles.wrapperComponent}>
+        <View>
+          <Image
+            style={{
+              width: 260,
+              height: 260,
+            }}
+            source={require("../assets/images/logo.png")}
           />
         </View>
-        <View style={styles.buttonContainer}>
+        <View style={styles.flexButton}>
           <TouchableOpacity
-            onPress={handleSignUp}
-            style={[styles.button, styles.buttonOutline]}
+            onPress={() => setIsLogin(true)}
+            style={isLogin ? styles.darkButton : styles.lightButton}
           >
-            <Text style={styles.buttonOutlineText}>Register</Text>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setIsLogin(false)}
+            style={isLogin ? styles.lightButton : styles.darkButton}
+          >
+            <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
-    </KeyboardAwareScrollView>
+      </View>
+      <View
+        style={{
+          height: "50%",
+          backgroundColor: "#FEBB01",
+          borderTopStartRadius: 80,
+          borderTopRightRadius: 80,
+        }}
+      >
+        {isLogin ? (
+          <KeyboardAwareScrollView behavior="padding">
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
+              <View style={styles.inputContainer}>
+                <Text>Email</Text>
+                <TextInput
+                  placeholder="Email"
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                  style={styles.input}
+                />
+                <Text>Password</Text>
+                <TextInput
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  style={styles.input}
+                  secureTextEntry
+                />
+              </View>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={handleLogin}
+                  style={styles.loginButton}
+                >
+                  <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
+              </View>
+            </KeyboardAvoidingView>
+          </KeyboardAwareScrollView>
+        ) : (
+          <KeyboardAwareScrollView behavior="padding">
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
+              <View style={styles.inputContainer}>
+                <Text>Email</Text>
+                <TextInput
+                  placeholder="Email"
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                  style={styles.input}
+                />
+                <Text>Password</Text>
+                <TextInput
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  style={styles.input}
+                  secureTextEntry
+                />
+                <Text>Confirm password</Text>
+
+                <TextInput
+                  placeholder="Confirn password"
+                  value={confirmPassword}
+                  onChangeText={(text) => setConfirmPassword(text)}
+                  style={styles.input}
+                  secureTextEntry
+                />
+              </View>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={handleSignUp}
+                  style={styles.loginButton}
+                >
+                  <Text style={styles.buttonText}>Register</Text>
+                </TouchableOpacity>
+              </View>
+            </KeyboardAvoidingView>
+          </KeyboardAwareScrollView>
+        )}
+      </View>
+    </View>
   );
 };
 
 export default SignUp;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  wrapperComponent: {
     justifyContent: "center",
     alignItems: "center",
+    height: "50%",
+  },
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FEBB01",
+    borderRadius: 20,
+    height: "100%",
   },
   inputContainer: {
     width: "80%",
+    paddingTop: 15,
+    paddingBottom: 30,
   },
   input: {
     backgroundColor: "white",
@@ -91,26 +189,36 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+    marginBottom: 15,
   },
   buttonContainer: {
-    width: "60%",
+    width: "80%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
+    paddingBottom: 20,
   },
-  button: {
-    backgroundColor: "#0782F9",
+  darkButton: {
+    backgroundColor: "#FEBB01",
+    width: "45%",
+    padding: 15,
+    borderRadius: 20,
+    alignItems: "center",
+  },
+  lightButton: {
+    backgroundColor: "rgba(255, 189, 1, 0.4);",
+    width: "45%",
+    padding: 15,
+    borderRadius: 20,
+    alignItems: "center",
+  },
+  loginButton: {
+    backgroundColor: "#81693F",
     width: "100%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
   },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
-  },
+
   buttonText: {
     color: "white",
     fontWeight: "700",
@@ -120,5 +228,12 @@ const styles = StyleSheet.create({
     color: "#0782F9",
     fontWeight: "700",
     fontSize: 16,
+  },
+  flexButton: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    width: "100%",
   },
 });
