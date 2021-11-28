@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 
+
 const About = () => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
